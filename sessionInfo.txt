@@ -1,0 +1,49 @@
+R version 4.0.3 (2020-10-10)
+Platform: x86_64-apple-darwin17.0 (64-bit)
+Running under: macOS Mojave 10.14.6
+
+Matrix products: default
+BLAS:   /System/Library/Frameworks/Accelerate.framework/Versions/A/Frameworks/vecLib.framework/Versions/A/libBLAS.dylib
+LAPACK: /Library/Frameworks/R.framework/Versions/4.0/Resources/lib/libRlapack.dylib
+
+locale:
+[1] en_US.UTF-8/en_US.UTF-8/en_US.UTF-8/C/en_US.UTF-8/en_US.UTF-8
+
+attached base packages:
+[1] stats4    parallel  stats     graphics  grDevices utils     datasets  methods   base     
+
+other attached packages:
+ [1] Rmisc_1.5                   plyr_1.8.6                  data.table_1.13.6          
+ [4] nlme_3.1-151                exactRankTests_0.8-31       tibble_3.0.5               
+ [7] reshape2_1.4.4              dplyr_1.0.3                 randomcoloR_1.1.0.1        
+[10] cowplot_1.1.1               propr_4.2.6                 igraph_1.2.6               
+[13] CoDaSeq_0.99.6              car_3.0-10                  carData_3.0-4              
+[16] ALDEx2_1.20.0               zCompositions_1.3.4         truncnorm_1.0-8            
+[19] NADA_1.6-1.1                survival_3.2-7              MASS_7.3-53                
+[22] knitr_1.31                  vegan_2.5-7                 lattice_0.20-41            
+[25] permute_0.9-5               phyloseq_1.32.0             ggplot2_3.3.3              
+[28] ShortRead_1.46.0            GenomicAlignments_1.24.0    SummarizedExperiment_1.18.2
+[31] DelayedArray_0.14.1         matrixStats_0.57.0          Biobase_2.48.0             
+[34] Rsamtools_2.4.0             GenomicRanges_1.40.0        GenomeInfoDb_1.24.2        
+[37] Biostrings_2.56.0           XVector_0.28.0              IRanges_2.22.2             
+[40] S4Vectors_0.26.1            BiocParallel_1.22.0         BiocGenerics_0.34.0        
+[43] dada2_1.16.0                Rcpp_1.0.6                 
+
+loaded via a namespace (and not attached):
+ [1] bitops_1.0-6           RColorBrewer_1.1-2     progress_1.2.2         tools_4.0.3           
+ [5] R6_2.5.0               mgcv_1.8-33            colorspace_2.0-0       ade4_1.7-16           
+ [9] withr_2.4.1            tidyselect_1.1.0       prettyunits_1.1.1      curl_4.3              
+[13] compiler_4.0.3         scales_1.1.1           stringr_1.4.0          foreign_0.8-81        
+[17] rio_0.5.16             jpeg_0.1-8.1           pkgconfig_2.0.3        rlang_0.4.10          
+[21] readxl_1.3.1           rstudioapi_0.13        generics_0.1.0         hwriter_1.3.2         
+[25] jsonlite_1.7.2         zip_2.1.1              RCurl_1.98-1.2         magrittr_2.0.1        
+[29] GenomeInfoDbData_1.2.3 biomformat_1.16.0      Matrix_1.3-2           munsell_0.5.0         
+[33] Rhdf5lib_1.10.1        abind_1.4-5            ape_5.4-1              lifecycle_0.2.0       
+[37] stringi_1.5.3          zlibbioc_1.34.0        Rtsne_0.15             rhdf5_2.32.4          
+[41] grid_4.0.3             forcats_0.5.1          crayon_1.3.4           haven_2.3.1           
+[45] splines_4.0.3          multtest_2.44.0        hms_1.0.0              pillar_1.4.7          
+[49] codetools_0.2-18       glue_1.4.2             V8_3.4.0               latticeExtra_0.6-29   
+[53] BiocManager_1.30.10    RcppParallel_5.0.2     png_0.1-7              vctrs_0.3.6           
+[57] foreach_1.5.1          cellranger_1.1.0       gtable_0.3.0           purrr_0.3.4           
+[61] xfun_0.20              openxlsx_4.2.3         iterators_1.0.13       cluster_2.1.0         
+[65] ellipsis_0.3.1        
