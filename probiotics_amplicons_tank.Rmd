@@ -306,11 +306,17 @@ ps <- phyloseq(otu_table(otu, taxa_are_rows=FALSE),
                tax_table(taxon))
 ps #429 taxa and 24 samples
 ntaxa(ps) #429
+ps1<-filter_taxa(ps, function(x) mean(x) >1, TRUE)
+ntaxa(ps1) #148
+ps2<-filter_taxa(ps, function(x) mean(x) >2, TRUE)
+ntaxa(ps2) #72
 ps5<-filter_taxa(ps, function(x) mean(x) >5, TRUE)
 ntaxa(ps5) #21
 ps10<-filter_taxa(ps, function(x) mean(x) >10, TRUE)
 ntaxa(ps10) #9
-get_taxa_unique(ps, "Genus") #262
+get_taxa_unique(ps, "Genus") #263
+get_taxa_unique(ps1, "Genus") #104
+get_taxa_unique(ps2, "Genus") #57
 get_taxa_unique(ps5, "Genus") #16
 get_taxa_unique(ps10, "Genus") #6
 
@@ -320,7 +326,7 @@ otu = as(otu_table(ps_ra), "matrix")
 write.table(otu,"silva_nochloronomito_otu_table_ra.txt",sep="\t",col.names=NA)
 get_taxa_unique(ps_ra, "Order") #115
 get_taxa_unique(ps_ra, "Class") #60
-get_taxa_unique(ps_ra, "Genus") #262
+get_taxa_unique(ps_ra, "Genus") #263
 
 n <- 60
 palette <- distinctColorPalette(n)
@@ -331,6 +337,7 @@ sample_data(ps_ra)$date<-factor(sample_data(ps_ra)$date,levels=c("pre","1day","3
 pdf("barchart_Class.pdf",width=13)
 p1=plot_bar(ps_ra, "date", fill="Class", facet_grid=.~coral)+
   geom_bar(aes(fill=Class), stat="identity",position="stack")+
+  theme_bw()+
   theme(strip.text=element_text(face="bold"))+
   theme(axis.text.x=element_text(angle = 90))+
   scale_fill_manual(values=palette)+
@@ -339,6 +346,29 @@ p1=plot_bar(ps_ra, "date", fill="Class", facet_grid=.~coral)+
   theme(legend.position = "bottom")
 p1
 dev.off()
+
+### Plot genus level with filtered dataset
+ps2_ra<-transform_sample_counts(ps2, function(OTU) OTU/sum(OTU))
+sample_data(ps2_ra)$coral<-factor(sample_data(ps2_ra)$coral,levels=c("coral_25","coral_26","coral_27","coral_28"))
+sample_data(ps2_ra)$date<-factor(sample_data(ps2_ra)$date,levels=c("pre","1day","3days","7days","21days","28days"))
+get_taxa_unique(ps2_ra, "Genus") #57
+
+n2 <- 57
+palette2 <- distinctColorPalette(n2)
+
+pdf("barchart_Genus.pdf",width=13)
+p2=plot_bar(ps2_ra, "date", fill="Genus", facet_grid=.~coral)+
+  geom_bar(aes(fill=Genus), stat="identity",position="stack")+
+  theme_bw()+
+  theme(strip.text=element_text(face="bold"))+
+  theme(axis.text.x=element_text(angle = 90))+
+  scale_fill_manual(values=palette2)+
+  theme(plot.title = element_text(face="italic"))+
+  theme(axis.title.x = element_blank())+
+  theme(legend.position = "bottom")
+p2
+dev.off()
+
 
 ```
 
@@ -416,5 +446,43 @@ date<-as.character(samples$date)
 dist.clr <- dist(E.clr)
 perm<-adonis(dist.clr~coral*date,as(sample_data(ps),"data.frame"))
 print(perm)
+
+
+##### Beta Dispersion
+
+# Calculate multivariate dispersions based on date
+mod<-betadisper(dist.clr,date)
+anova(mod)
+plot(mod)
+boxplot(mod)
+
+# merge beta dispersion data and metadata to make a prettier boxplot
+tapply(mod$distances, date, mean)
+dis <- mod$distances
+dis.melt <- melt(dis)
+dis.melt$Sample <- rownames(dis.melt)
+samples$Sample <- rownames(samples)
+dis.treat <- merge(samples, dis.melt)
+colnames(dis.treat)[4] <- "distance"
+
+#run linear model to test significance
+distlm <-lm(distance~date*coral, data=dis.treat)
+summary(distlm)
+anova(distlm)
+
+dis.treat$date<-factor(dis.treat$date,levels=c("pre","1day","3days","7days","21days","28days"))
+pdf("DistanceToCentroid.pdf",width=6, height=4)
+p3<-ggplot(dis.treat,aes(x=date,y=distance))+
+  geom_boxplot()+
+  theme_bw()+
+  geom_point(aes(color=coral),size=3)+
+  scale_color_manual(values=c("#F0E442","#009E73","#CC79A7","#666666"),name="Coral")+
+  theme(axis.title.x=element_blank())+
+  #theme(legend.position="none")+
+  theme(text=element_text(size=14))+
+  theme(strip.text.y=element_text(face="italic",size=14))+
+  ylab("Distance to Centroid")
+p3
+dev.off()
 
 ```
