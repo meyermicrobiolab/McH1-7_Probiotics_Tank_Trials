@@ -1,6 +1,6 @@
 R version 4.1.1 (2021-08-10)
 Platform: x86_64-apple-darwin17.0 (64-bit)
-Running under: macOS Big Sur 11.6.4
+Running under: macOS Big Sur 11.6.5
 
 Matrix products: default
 LAPACK: /Library/Frameworks/R.framework/Versions/4.1/Resources/lib/libRlapack.dylib

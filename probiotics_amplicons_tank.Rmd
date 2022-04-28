@@ -332,16 +332,16 @@ n <- 60
 palette <- distinctColorPalette(n)
 
 sample_data(ps_ra)$coral<-factor(sample_data(ps_ra)$coral,levels=c("coral_25","coral_26","coral_27","coral_28"))
-sample_data(ps_ra)$date<-factor(sample_data(ps_ra)$date,levels=c("pre","1day","3days","7days","21days","28days"))
+sample_data(ps_ra)$date<-factor(sample_data(ps_ra)$date,levels=c("pre","1d","3d","7d","21d","28d"))
 
 pdf("barchart_Class.pdf",width=13)
 p1=plot_bar(ps_ra, "date", fill="Class", facet_grid=.~coral)+
   geom_bar(aes(fill=Class), stat="identity",position="stack")+
   theme_bw()+
-  theme(strip.text=element_text(face="bold"))+
-  theme(axis.text.x=element_text(angle = 90))+
+  theme(strip.text=element_text(face="bold", size=12))+
+  theme(axis.text.x=element_text(size=12))+
+  theme(axis.text.y=element_text(size=12))+
   scale_fill_manual(values=palette)+
-  theme(plot.title = element_text(face="italic"))+
   theme(axis.title.x = element_blank())+
   theme(legend.position = "bottom")
 p1
@@ -350,7 +350,7 @@ dev.off()
 ### Plot genus level with filtered dataset
 ps2_ra<-transform_sample_counts(ps2, function(OTU) OTU/sum(OTU))
 sample_data(ps2_ra)$coral<-factor(sample_data(ps2_ra)$coral,levels=c("coral_25","coral_26","coral_27","coral_28"))
-sample_data(ps2_ra)$date<-factor(sample_data(ps2_ra)$date,levels=c("pre","1day","3days","7days","21days","28days"))
+sample_data(ps2_ra)$date<-factor(sample_data(ps2_ra)$date,levels=c("pre","1d","3d","7d","21d","28d"))
 get_taxa_unique(ps2_ra, "Genus") #57
 
 n2 <- 57
@@ -363,7 +363,6 @@ p2=plot_bar(ps2_ra, "date", fill="Genus", facet_grid=.~coral)+
   theme(strip.text=element_text(face="bold"))+
   theme(axis.text.x=element_text(angle = 90))+
   scale_fill_manual(values=palette2)+
-  theme(plot.title = element_text(face="italic"))+
   theme(axis.title.x = element_blank())+
   theme(legend.position = "bottom")
 p2
@@ -422,9 +421,9 @@ screeplot(d.pcx)
 # replot PCA with ggplot2 (showing samples only)
 df_out <- as.data.frame(d.pcx$x)
 theme_set(theme_bw()+theme(panel.grid.major = element_blank(),panel.grid.minor = element_blank()))
-cols<-c("pre"="#000000","1day"="#999999","3days"="#D55E00","7days"="#E69F00","21days"="#0072B2","28days"="#56B4E9")
+cols<-c("pre"="#000000","1d"="#999999","3d"="#D55E00","7d"="#E69F00","21d"="#0072B2","28d"="#56B4E9")
 samples$coral<-factor(samples$coral,levels=c("coral_25","coral_26","coral_27","coral_28"))
-samples$date<-factor(samples$date,levels=c("pre","1day","3days","7days","21days","28days"))
+samples$date<-factor(samples$date,levels=c("pre","1d","3d","7d","21d","28d"))
 
 pdf("PCA.pdf",width=8.5)
 p<-ggplot(df_out,aes(x=PC1,y=PC2,fill=samples$date,shape=samples$coral))
@@ -470,7 +469,7 @@ distlm <-lm(distance~date*coral, data=dis.treat)
 summary(distlm)
 anova(distlm)
 
-dis.treat$date<-factor(dis.treat$date,levels=c("pre","1day","3days","7days","21days","28days"))
+dis.treat$date<-factor(dis.treat$date,levels=c("pre","1d","3d","7d","21d","28d"))
 pdf("DistanceToCentroid.pdf",width=6, height=4)
 p3<-ggplot(dis.treat,aes(x=date,y=distance))+
   geom_boxplot()+
